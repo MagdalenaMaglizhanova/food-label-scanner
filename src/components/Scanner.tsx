@@ -7,7 +7,7 @@ const Scanner: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
- const API_URL = import.meta.env.REACT_APP_API_URL;
+ const API_URL = import.meta.env.VITE_API_URL;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
