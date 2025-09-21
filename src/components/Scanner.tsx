@@ -7,18 +7,19 @@ const Scanner: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
+ const API_URL = import.meta.env.REACT_APP_API_URL;
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
-      
-      // Създаване на preview на изображението
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(selectedFile);
-      
+
       setResult(null);
       setError(null);
     }
@@ -35,10 +36,10 @@ const Scanner: React.FC = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("/scanner/scan", {
-  method: "POST",
-  body: formData,
-});
+      const response = await fetch(`${API_URL}/scanner/scan`, { // <- променено
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(`Грешка в сървъра: ${response.status}`);
@@ -73,15 +74,15 @@ const Scanner: React.FC = () => {
               <i className="fas fa-cloud-upload-alt"></i>
               <p>{file ? file.name : "Изберете изображение"}</p>
             </div>
-            <input 
-              id="file-upload" 
-              type="file" 
-              accept="image/*" 
-              onChange={handleFileChange} 
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
               className="file-input"
             />
           </label>
-          
+
           {imagePreview && (
             <div className="image-preview">
               <img src={imagePreview} alt="Preview" />
@@ -89,8 +90,8 @@ const Scanner: React.FC = () => {
           )}
         </div>
 
-        <button 
-          onClick={handleScan} 
+        <button
+          onClick={handleScan}
           disabled={loading || !file}
           className="scan-button"
         >
