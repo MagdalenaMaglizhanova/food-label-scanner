@@ -2,36 +2,58 @@ import React from 'react';
 
 const StreamlitFrame: React.FC = () => {
   return (
-    <section className="streamlit-section">
+    <section className="features" style={{background: '#fff'}}>
       <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">Интелигентен анализатор на храни</h2>
-          <p>Използвайте нашия инструмент за разпознаване и анализ на хранителната стойност</p>
-        </div>
+        <h2 className="section-title">Интелигентен анализатор на храни</h2>
+        <p style={{textAlign: 'center', marginBottom: '3rem', fontSize: '1.1rem', color: '#666'}}>
+          Използвайте нашия инструмент за разпознаване и анализ на хранителната стойност
+        </p>
         
-        <div className="streamlit-container">
-          <div className="frame-wrapper">
-            <iframe
-              src="https://healthy-food-app-c96vfmo4qmcxqzymtel3sb.streamlit.app/"
-              title="Healthy Food App"
-              className="streamlit-iframe"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-            
-            <div className="frame-footer">
-              <p>
-                Ако приложението не се зареди, моля изчакайте или 
-                <a 
-                  href="https://healthy-food-app-c96vfmo4qmcxqzymtel3sb.streamlit.app/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  отворете в нов прозорец
-                </a>
-              </p>
-            </div>
-          </div>
+        <div style={{
+          width: '100%',
+          maxWidth: '1000px',
+          margin: '0 auto',
+          height: '700px',
+          borderRadius: '10px',
+          overflow: 'hidden',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+          border: '1px solid #e0e0e0'
+        }}>
+          <iframe
+            src="https://healthy-food-app-c96vfmo4qmcxqzymtel3sb.streamlit.app/"
+            title="Healthy Food App"
+            style={{
+              width: '100%',
+              height: '100%',
+              border: 'none'
+            }}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+
+        <div style={{
+          textAlign: 'center',
+          marginTop: '1rem',
+          padding: '1rem',
+          color: '#666',
+          fontSize: '0.9rem'
+        }}>
+          <p style={{margin: 0}}>
+            Ако приложението не се зареди, моля изчакайте или{' '}
+            <a 
+              href="https://healthy-food-app-c96vfmo4qmcxqzymtel3sb.streamlit.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                color: '#4CAF50',
+                textDecoration: 'none',
+                fontWeight: 'bold'
+              }}
+            >
+              отворете в нов прозорец
+            </a>
+          </p>
         </div>
 
         <div className="features-grid" style={{marginTop: '3rem'}}>
@@ -70,4 +92,4 @@ const StreamlitFrame: React.FC = () => {
   );
 };
 
-export default StreamlitFrame;
+export default Scanner;
