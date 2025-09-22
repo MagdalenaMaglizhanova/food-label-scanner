@@ -38,13 +38,11 @@ const Footer: React.FC = () => {
             <ul className="footer-links">
               <li>
                 <Link to="/" className="footer-link">
-                  <span className="link-icon">🏠</span>
                   Начало
                 </Link>
               </li>
               <li>
                 <Link to="/scanner" className="footer-link">
-                  <span className="link-icon">🔍</span>
                   Проверка на съставки
                 </Link>
               </li>
@@ -55,19 +53,16 @@ const Footer: React.FC = () => {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <span className="link-icon">📷</span>
                   Разпознаване на храни
                 </a>
               </li>
               <li>
                 <Link to="/about" className="footer-link">
-                  <span className="link-icon">👥</span>
                   За нас
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="footer-link">
-                  <span className="link-icon">📞</span>
                   Контакти
                 </Link>
               </li>
