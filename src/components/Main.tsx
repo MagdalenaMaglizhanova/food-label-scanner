@@ -96,7 +96,7 @@ const Main: React.FC = () => {
             <div className="product-card">
               <div className="product-image">
                 <img 
-                  src="https://images.unsplash.com/photo-1610966406800-20b8dae1d456?auto=format&fit=crop&q=80&w=500" 
+                  src="https://images.pexels.com/photos/4113830/pexels-photo-4113830.jpeg?auto=compress&cs=tinysrgb&w=500" 
                   alt="Зелен сок" 
                 />
               </div>
