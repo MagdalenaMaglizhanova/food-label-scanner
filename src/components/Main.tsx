@@ -133,8 +133,6 @@ const Main: React.FC = () => {
               <div className="product-info">
                 <h3>Суперхрани микс</h3>
                 <p>Богата смес от суперхрани за ежедневна употреба</p>
-                <div className="product-price">24.99 лв.</div>
-                <button className="btn btn-primary">Добави в количката</button>
               </div>
             </div>
 
@@ -148,8 +146,6 @@ const Main: React.FC = () => {
               <div className="product-info">
                 <h3>Органични зеленчуци</h3>
                 <p>Пресни био зеленчуки от местни производители</p>
-                <div className="product-price">18.50 лв.</div>
-                <button className="btn btn-primary">Добави в количката</button>
               </div>
             </div>
 
@@ -163,8 +159,6 @@ const Main: React.FC = () => {
               <div className="product-info">
                 <h3>Зелен сок</h3>
                 <p>Енергизиращ зелен сок от спанак, киви и лимон</p>
-                <div className="product-price">12.99 лв.</div>
-                <button className="btn btn-primary">Добави в количката</button>
               </div>
             </div>
           </div>
