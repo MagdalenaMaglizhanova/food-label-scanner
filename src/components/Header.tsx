@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="header-container">
         <div className="logo">
-          <i className="fas fa-leaf"></i>
+          <i className="fas fa-utensils"></i>
           <Link to="/" className="logo-link">HealthyLife</Link>
         </div>
 
@@ -35,16 +35,16 @@ const Header: React.FC = () => {
               <Link to="/scanner" className="nav-link" onClick={closeMenu}>Проверка на съставки</Link>
             </li>
             <li className="nav-item">
-  <a
-    href="https://magdalenamaglizhanova.github.io/food_recognition/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="nav-link"
-    onClick={closeMenu}
-  >
-    Разпознаване
-  </a>
-</li>
+              <a
+                href="https://magdalenamaglizhanova.github.io/food_recognition/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-link"
+                onClick={closeMenu}
+              >
+                Разпознаване
+              </a>
+            </li>
             <li className="nav-item">
               <Link to="/about" className="nav-link" onClick={closeMenu}>За нас</Link>
             </li>
