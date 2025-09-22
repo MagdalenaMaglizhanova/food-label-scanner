@@ -1075,3 +1075,33 @@ footer {
 .streamlit-frame {
   border-radius: 15px;
 }
+
+/* Ensure feature icons are properly displayed */
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 50%;
+}
+
+.feature-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* Products price styling */
+.product-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.product-card .btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
