@@ -10,29 +10,49 @@ const Scanner: React.FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    console.log("Fetching list of test files from server...");
     fetch(`${API_URL}/scanner/list-test-files`)
       .then((res) => res.json())
-      .then((data) => setFiles(data.files || []))
-      .catch(() => setError("Не успях да заредя файловете"));
+      .then((data) => {
+        console.log("Files received from server:", data.files);
+        setFiles(data.files || []);
+      })
+      .catch((err) => {
+        console.error("Error fetching test files:", err);
+        setError("Не успях да заредя файловете");
+      });
   }, []);
 
   const handleScan = async () => {
     if (!selectedFile) return;
+
+    console.log("Fetching OCR for:", selectedFile);
 
     setLoading(true);
     setError(null);
     setResult(null);
 
     try {
-      const response = await fetch(`${API_URL}/scanner/scan-from-test?filename=${selectedFile}`);
+      const response = await fetch(
+        `${API_URL}/scanner/scan-from-test?filename=${encodeURIComponent(selectedFile)}`,
+        {
+          method: "GET",
+          headers: {
+            "Accept": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Грешка в сървъра: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log("OCR response:", data);
+
       setResult(data.report || "Няма разпознат текст");
     } catch (err: unknown) {
+      console.error("Error during OCR fetch:", err);
       if (err instanceof Error) {
         setError(err.message);
       } else {
