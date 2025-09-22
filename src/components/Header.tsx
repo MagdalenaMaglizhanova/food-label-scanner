@@ -23,7 +23,7 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="logo">
           <i className="fas fa-utensils"></i>
-          <Link to="/" className="logo-link">HealthyLife</Link>
+          <span className="logo-text">HealthyLife</span>
         </div>
 
         <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
