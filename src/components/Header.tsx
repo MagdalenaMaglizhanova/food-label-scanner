@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 className="nav-link"
                 onClick={closeMenu}
               >
-                Разпознаване
+                ИИ диетолог
               </a>
             </li>
             <li className="nav-item">
