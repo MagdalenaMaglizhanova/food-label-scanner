@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StreamlitFrame: React.FC = () => {
+const Scanner: React.FC = () => {
   return (
     <section className="features" style={{background: '#fff'}}>
       <div className="container">
