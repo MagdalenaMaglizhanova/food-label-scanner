@@ -1,62 +1,53 @@
-import React, { useEffect, useState } from "react";
+// Scanner.tsx
+import React, { useState } from "react";
 
 const Scanner: React.FC = () => {
-  const [files, setFiles] = useState<string[]>([]);
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-  useEffect(() => {
-    console.log("Fetching list of test files from server...");
-    fetch(`${API_URL}/scanner/list-test-files`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Files received from server:", data.files);
-        setFiles(data.files || []);
-      })
-      .catch((err) => {
-        console.error("Error fetching test files:", err);
-        setError("Не успях да заредя файловете");
-      });
-  }, []);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
 
   const handleScan = async () => {
     if (!selectedFile) return;
-
-    console.log("Fetching OCR for:", selectedFile);
 
     setLoading(true);
     setError(null);
     setResult(null);
 
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
     try {
-      const response = await fetch(
-        `${API_URL}/scanner/scan-from-test?filename=${encodeURIComponent(selectedFile)}`,
-        {
-          method: "GET",
-          headers: {
-            "Accept": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/scan`, {
+        method: 'POST',
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(`Грешка в сървъра: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log("OCR response:", data);
-
-      setResult(data.report || "Няма разпознат текст");
+      
+      if (data.success) {
+        setResult(data);
+      } else {
+        throw new Error(data.error || 'Грешка при обработка');
+      }
     } catch (err: unknown) {
-      console.error("Error during OCR fetch:", err);
+      console.error('Error during scan:', err);
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("Неизвестна грешка");
+        setError('Неизвестна грешка');
       }
     } finally {
       setLoading(false);
@@ -67,25 +58,22 @@ const Scanner: React.FC = () => {
     <div className="scanner-container">
       <div className="scanner-card">
         <h2 className="scanner-title">
-          <i className="fas fa-camera"></i> OCR тест от сървъра
+          <i className="fas fa-camera"></i> Анализ на хранителен етикет
         </h2>
         <p className="scanner-description">
-          Изберете тестово изображение, качено на сървъра, и ние ще анализираме съставките.
+          Качи снимка на етикет и ние ще анализираме съставките.
         </p>
 
         <div className="scanner-upload-area">
-          <select
-            value={selectedFile || ""}
-            onChange={(e) => setSelectedFile(e.target.value)}
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/jpg"
+            onChange={handleFileChange}
             className="file-input"
-          >
-            <option value="">-- Изберете файл --</option>
-            {files.map((file, idx) => (
-              <option key={idx} value={file}>
-                {file}
-              </option>
-            ))}
-          </select>
+          />
+          {selectedFile && (
+            <p className="file-info">Избран файл: {selectedFile.name}</p>
+          )}
         </div>
 
         <button
@@ -99,7 +87,7 @@ const Scanner: React.FC = () => {
             </>
           ) : (
             <>
-              <i className="fas fa-search"></i> Сканирай
+              <i className="fas fa-search"></i> Анализирай етикет
             </>
           )}
         </button>
@@ -116,11 +104,68 @@ const Scanner: React.FC = () => {
             <h3 className="result-title">
               <i className="fas fa-file-alt"></i> Резултат от анализа:
             </h3>
-            <div className="result-content">
-              {result.split("\n").map((line, index) => (
-                <p key={index} className="result-line">{line}</p>
-              ))}
+            
+            <div className="result-section">
+              <h4>📄 Разпознат текст:</h4>
+              <div className="text-content">
+                {result.ocr_text}
+              </div>
             </div>
+
+            {result.harmful_e_numbers.length > 0 && (
+              <div className="result-section harmful-section">
+                <h4>🚨 Вредни E-номера:</h4>
+                {result.harmful_e_numbers.map((item: any, index: number) => (
+                  <div key={index} className="harmful-item">
+                    <strong>{item.code}</strong>: {item.description}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {result.harmful_keywords.length > 0 && (
+              <div className="result-section warning-section">
+                <h4>⚠️ Засечени съставки:</h4>
+                {result.harmful_keywords.map((item: any, index: number) => (
+                  <div key={index} className="keyword-item">
+                    <strong>{item.keyword}</strong>: {item.reason}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {result.alternatives.length > 0 && (
+              <div className="result-section alternatives-section">
+                <h4>🍽 Препоръчани алтернативи:</h4>
+                {result.alternatives.map((alt: string, index: number) => (
+                  <div key={index} className="alternative-item">{alt}</div>
+                ))}
+              </div>
+            )}
+
+            <div className="result-section">
+              <h4>📊 Пълен отчет:</h4>
+              <div className="report-content">
+                {result.report.split('\n').map((line: string, index: number) => (
+                  <p key={index} className="report-line">{line}</p>
+                ))}
+              </div>
+            </div>
+
+            <button
+              className="download-button"
+              onClick={() => {
+                const blob = new Blob([result.report], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'анализ-етикет.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+            >
+              ⬇️ Изтегли отчет
+            </button>
           </div>
         )}
       </div>
