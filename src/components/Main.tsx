@@ -9,7 +9,7 @@ const Main: React.FC = () => {
           <div className="hero-content">
             <div className="hero-text">
               <h1>Здравословен начин на живот</h1>
-              <p>Открийте силата на природните храни и подобрете здравето си с нашите продукти и съвети</p>
+              <p>Открийте силата на природните храни и подобрете здравето си с нашите съвети</p>
               <div className="hero-buttons">
                 <button className="btn btn-primary">Разгледай продукти</button>
                 <button className="btn btn-secondary">Научи повече</button>
