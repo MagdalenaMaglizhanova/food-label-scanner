@@ -10,17 +10,17 @@ const Scanner: React.FC = () => {
         </p>
         
         <div style={{
-          width: '100%',
-          maxWidth: '1000px',
+          width: '95%', // Променено от 100% на 95% за по-добро центриране
+          maxWidth: '1200px', // Увеличена максимална ширина
           margin: '0 auto',
-          height: '700px',
+          height: '800px', // Увеличена височина
           borderRadius: '10px',
           overflow: 'hidden',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
           border: '1px solid #e0e0e0'
         }}>
           <iframe
-            src="https://healthy-food-app-c96vfmo4qmcxqzymtel3sb.streamlit.app/"
+            src="https://healthy-food-app-c96vfmo4qmcxqzymtel3sb.streamlit.app/?embed=true"
             title="Healthy Food App"
             style={{
               width: '100%',
@@ -29,6 +29,11 @@ const Scanner: React.FC = () => {
             }}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            loading="eager" // Добавено за по-бързо зареждане
+            onError={(e) => {
+              console.error('Грешка при зареждане на iframe:', e);
+              // Можете да добавите fallback съдържание тук
+            }}
           />
         </div>
 
